@@ -26,7 +26,7 @@ export default class RegistrationPage {
     this.elements.confirmPasswordInput().type(text);
   }
 
-  clickCreateAccount() {
+  clickCreateAccountButton() {
     this.elements.createAccountButton().click();
   }
 
