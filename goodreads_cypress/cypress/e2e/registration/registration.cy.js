@@ -15,7 +15,7 @@ describe("Registration", () => {
     });
   });
 
-  it("reqisters a new user via emailUtils", () => {
+  it("reqisters a new user using temporary email service", () => {
     cy.visit("/");
     cy.contains("Sign up with email").click();
 
@@ -23,7 +23,7 @@ describe("Registration", () => {
     registrationPage.fillEmailInput(createdEmail);
     registrationPage.fillPasswordInput(password);
     registrationPage.fillConfirmPasswordInput(password);
-    registrationPage.clickCreateAccount();
+    registrationPage.clickCreateAccountButton();
 
     emailUtils.retrieveVerificationCode().then((otpCode) => {
       registrationPage.fillOtpCodeInput(otpCode);
