@@ -23,3 +23,32 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// In your Cypress/support/commands.js file
+import LoginPage from "../pages/loginPage";
+
+Cypress.Commands.add("getRandomBookTitle", () => {
+  return cy
+    .request(
+      "https://openlibrary.org/search.json?q=first_publish_year%3A[1953+TO+2023]&limit=1000&fields=title&language=eng",
+    )
+    .then((response) => {
+      const titles = response.body.docs;
+      const randomIndex = Math.floor(Math.random() * titles.length);
+      return titles[randomIndex].title;
+    });
+});
+
+const loginPage = new LoginPage();
+
+Cypress.Commands.add("login", () => {
+  let userEmail = "qcferents@gmail.com";
+  let userPassword = "12qw34er5t";
+
+  cy.visit("/");
+  cy.contains("Sign In").click();
+  cy.contains("Sign in with email").click();
+
+  loginPage.fillEmailInput(userEmail);
+  loginPage.fillPasswordInput(userPassword);
+  loginPage.clickSignInButton();
+});
