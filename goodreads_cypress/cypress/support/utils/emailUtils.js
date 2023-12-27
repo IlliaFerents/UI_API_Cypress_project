@@ -10,7 +10,7 @@ export function createFakeEmail() {
         url: "https://api.mail.gw/accounts",
         body: {
           address: `${randomUsername}@${domain}`,
-          password: "your_password",
+          password: "password",
         },
       })
       .then((response) => {
@@ -45,7 +45,7 @@ function getAuthToken(emailAddress) {
       url: "https://api.mail.gw/token",
       body: {
         address: emailAddress,
-        password: "your_password",
+        password: "password",
       },
     })
     .then((tokenResponse) => {
