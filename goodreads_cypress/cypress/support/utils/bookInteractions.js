@@ -8,14 +8,23 @@ export const searchAndAddToReadList = (bookTitle) => {
     cy.get("button[class='wtrToRead']").click();
   });
 
-  cy.get("button[title='Remove this book from your shelves']").should("exist");
+  cy.get(".wtrUnshelve").should("be.visible");
 };
 
 export const removeAllBooksFromAllShelves = () => {
-  cy.visit("/review/list/172896678?ref=nav_mybooks");
+  cy.visit("/");
+  cy.contains("My Books").click({ force: true });
 
+  cy.get(".selectedShelf").contains("All").click();
   cy.get("#batchEditLink").click();
   cy.get("a[onclick^='selectAllReviews()']").click();
   cy.get("#remove_books_link").click();
-  cy.on("window:confirm", () => true);
+};
+
+export const getLastAddedBookTitle = () => {
+  return cy
+    .get(".bookalike.review:nth-child(1)")
+    .find(".field.title")
+    .invoke("text")
+    .as("LastAddedBookTitle");
 };
