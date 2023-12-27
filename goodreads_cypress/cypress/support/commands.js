@@ -29,7 +29,7 @@ import LoginPage from "../pages/loginPage";
 Cypress.Commands.add("getRandomBookTitle", () => {
   return cy
     .request(
-      "https://openlibrary.org/search.json?q=first_publish_year%3A[1953+TO+2023]&limit=1000&fields=title&language=eng",
+      "https://openlibrary.org/search.json?q=first_publish_year%3A[1993+TO+2023]&limit=1000&fields=title&language=eng",
     )
     .then((response) => {
       const titles = response.body.docs;
@@ -37,6 +37,15 @@ Cypress.Commands.add("getRandomBookTitle", () => {
       return titles[randomIndex].title;
     });
 });
+
+Cypress.Commands.add(
+  "assertBookTitlesMatch",
+  (retrievedBookTitleAlias, expectedBookTitle) => {
+    expect(retrievedBookTitleAlias.toLowerCase()).to.include(
+      expectedBookTitle.toLowerCase(),
+    );
+  },
+);
 
 const loginPage = new LoginPage();
 
