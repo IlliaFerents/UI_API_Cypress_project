@@ -3,13 +3,15 @@ import LoginPage from "../../pages/loginPage";
 const loginPage = new LoginPage();
 
 describe("Login", () => {
-  let userEmail = "qcferents@gmail.com";
-  let userPassword = "12qw34er5t";
-
-  it("logs into app with existing user", () => {
+  beforeEach(() => {
+    cy.fixture("user_login").then(function (userData) {
+      this.userData = userData;
+    });
     cy.visit("/");
     cy.contains("Sign In").click();
     cy.contains("Sign in with email").click();
+  });
+
   it("logs into app with existing user", function () {
     loginPage.fillEmailInput(this.userData.email);
     loginPage.fillPasswordInput(this.userData.password);
