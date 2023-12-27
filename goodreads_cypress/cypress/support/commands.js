@@ -41,14 +41,21 @@ Cypress.Commands.add("getRandomBookTitle", () => {
 const loginPage = new LoginPage();
 
 Cypress.Commands.add("login", () => {
-  let userEmail = "qcferents@gmail.com";
-  let userPassword = "12qw34er5t";
+  cy.fixture("user_login").then((userData) => {
+    cy.session(
+      [userData.email, userData.password],
+      () => {
+        cy.visit("/");
+        cy.contains("Sign In").click();
+        cy.contains("Sign in with email").click();
 
-  cy.visit("/");
-  cy.contains("Sign In").click();
-  cy.contains("Sign in with email").click();
-
-  loginPage.fillEmailInput(userEmail);
-  loginPage.fillPasswordInput(userPassword);
-  loginPage.clickSignInButton();
+        loginPage.fillEmailInput(userData.email);
+        loginPage.fillPasswordInput(userData.password);
+        loginPage.clickSignInButton();
+      },
+      {
+        cacheAcrossSpecs: true,
+      },
+    );
+  });
 });
