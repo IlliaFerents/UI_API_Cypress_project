@@ -7,20 +7,19 @@ const registrationPage = new RegistrationPage();
 describe("Registration", () => {
   const fakeName = faker.person.fullName();
   const password = faker.internet.password();
-  let createdEmail;
 
   before(() => {
     emailUtils.createFakeEmail().then((email) => {
-      createdEmail = email;
+      cy.wrap(email).as("email");
     });
   });
 
-  it("reqisters a new user using temporary email service", () => {
+  it("reqisters a new user using temporary email service", function () {
     cy.visit("/");
     cy.contains("Sign up with email").click();
 
     registrationPage.fillNameInput(fakeName);
-    registrationPage.fillEmailInput(createdEmail);
+    registrationPage.fillEmailInput(this.email);
     registrationPage.fillPasswordInput(password);
     registrationPage.fillConfirmPasswordInput(password);
     registrationPage.clickCreateAccountButton();
