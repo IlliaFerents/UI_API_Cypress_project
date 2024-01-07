@@ -15,4 +15,4 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          run: npm github:run
+          spec: cypress/e2e/pull_request_test.cy.js
