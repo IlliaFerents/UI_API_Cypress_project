@@ -1,3 +1,3 @@
-# Goodreads UI and Referential API basic Cypress automation
+# Goodreads Cypress automation
 
 
