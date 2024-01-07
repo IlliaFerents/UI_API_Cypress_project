@@ -4,9 +4,11 @@ export const searchAndAddToReadList = (bookTitle) => {
 
   cy.get(".searchBox__icon.searchBox__icon--navbar").click();
 
-  cy.get("div[id*='1_book']").within(() => {
-    cy.get("button[class='wtrToRead']").click();
-  });
+  cy.get("div[id*='1_book']")
+    .first()
+    .within(() => {
+      cy.get("button[class='wtrToRead']").click();
+    });
 
   cy.get(".wtrUnshelve").should("be.visible");
 };
